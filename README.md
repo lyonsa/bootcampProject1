@@ -32,6 +32,24 @@ A competitive multiplayer quiz app where users compete to become the best. Users
 - [ ] OPTIONAL Mobile Functionality
 - [ ] OPTIONAL Lifelines/Powerups
 
+## Setup Development Environment
+1. Clone the repository
+```shell
+  $ git clone https://github.com/lyonsa/bootcampProject1 bootcamp-project1
+```
+2. CD to directory
+```shell
+  $ cd bootcamp-project1
+```
+3. Install dependencies
+```shell
+  $ npm install
+```
+4. Start application
+```shell
+  $ npm run start
+```
+
 ## Game Logic
 - Homepage
   - Shows users waiting (0/2, 1/2)
