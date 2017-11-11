@@ -45,7 +45,16 @@ A competitive multiplayer quiz app where users compete to become the best. Users
 ```shell
   $ npm install
 ```
-4. Start application
+4. Add `.env` file and add environmental variables
+```shell
+  REACT_APP_FIREBASE_API_KEY=SECRET
+  REACT_APP_FIREBASE_AUTH_DOMAIN=SECRET
+  REACT_APP_FIREBASE_DB_URL=SECRET
+  REACT_APP_FIREBASE_PROJ_ID=SECRET
+  REACT_APP_FIREBASE_STORAGE_BUCKET=SECRET
+  REACT_APP_FIREBASE_MSG_SENDER_ID=SECRET
+```
+5. Start application
 ```shell
   $ npm run start
 ```
