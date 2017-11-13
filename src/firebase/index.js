@@ -12,3 +12,6 @@ const config = {
 export const firebaseApp = firebase.initializeApp(config)
 export const firebaseDb = firebase.database()
 export const firebaseAuth = firebase.auth()
+export const firebasePlayers = firebase.database().ref('players')
+export const firebaseGames = firebase.database().ref('games')
+export const firebaseQueue = firebase.database().ref('queue')
