@@ -7,6 +7,7 @@ import rootReducer from '../reducers'
 import saveState from './save-state'
 import loadState from './load-state'
 import history from '../history'
+import { resumeUserSession } from '../actions/auth'
 
 // get inital state
 const persistedState = loadState()
@@ -17,6 +18,11 @@ const store = createStore(
   persistedState,
   applyMiddleware(thunk, logger, routerMiddleware(history))
 )
+
+if (persistedState.auth && persistedState.auth.user) {
+  // resume user session
+  store.dispatch(resumeUserSession())
+}
 
 // serialize state to local storage on change
 store.subscribe(() => {
