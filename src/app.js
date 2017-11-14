@@ -28,7 +28,7 @@ export default () => (
       <Route path="/leaderboard" component={Page.Leaderboard} />
       <ProtectedRoute path="/play" component={Page.Play} /> 
       <ProtectedRoute path="/game" component={Page.Game} />
-      <Route path="*" component={Page.NotFound} />
+      <Route component={Page.NotFound} />
     </Router>
   </Layout>
 )

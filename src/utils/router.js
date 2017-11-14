@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Switch } from 'react-router-dom'
 import { routerActions } from 'react-router-redux'
 
 const mapStateToProps = state => ({
@@ -13,7 +14,7 @@ const mapDispatchToProps = dispatch => (
 )
 
 const Router = ({ children, auth, pushRoute }) => (
-  <main>
+  <Switch>
     {
       // inject authentication state and ability
       // to programmatically push routes to child routes
@@ -28,7 +29,7 @@ const Router = ({ children, auth, pushRoute }) => (
         })
       )
     }
-  </main>
+  </Switch>
 )
 
 Router.propTypes = {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const Root = styled.div`
@@ -14,9 +14,13 @@ const Greeting = styled.h1`
   color: #fff;
 `
 
-class Profile {
+const Subheading = styled.strong`
+  color: #fff;
+`
 
-  componentWillMount() {
+class Profile extends Component {
+
+  componentDidMount() {
     // fetch for profile here
     // if profile not found,
     // redirect to not found!
@@ -29,9 +33,9 @@ class Profile {
         <Greeting>
           Profile route
         </Greeting>
-        <sub>
-          You're searching for {params.uid}
-        </sub>
+        <Subheading>
+          You were searching for { params.uid }
+        </Subheading>
       </Root>
     )
   }
