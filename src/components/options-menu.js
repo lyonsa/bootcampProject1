@@ -36,6 +36,7 @@ class OptionsMenu extends Component {
             <MenuItem
               primaryText="My Profile"
               rightIcon={<AccountIcon />}
+              onTouchTap={() => this.props.pushRoute('/profile/me')}
             />
             <MenuItem
               primaryText="Dashboard"

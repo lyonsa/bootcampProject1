@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const Root = styled.div`
@@ -14,7 +14,7 @@ const Greeting = styled.h1`
   color: #fff;
 `
 
-class Leaderboard {
+class Leaderboard extends Component {
   componentWillMount() {
     // fetch leaderboard here
   }
