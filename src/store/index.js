@@ -19,7 +19,7 @@ const store = createStore(
   applyMiddleware(thunk, logger, routerMiddleware(history))
 )
 
-if (persistedState.auth && persistedState.auth.user) {
+if (persistedState && persistedState.auth && persistedState.auth.user) {
   // resume user session
   store.dispatch(resumeUserSession())
 }

@@ -8,6 +8,7 @@ import inject from 'react-tap-event-plugin'
 import * as Page from './pages'
 import { Header } from './containers'
 import { Layout } from './components'
+import { Router, ProtectedRoute } from './utils'
 
 // for material
 inject()
@@ -20,7 +21,14 @@ const Heading = styled.h1`
 
 export default () => (
   <Layout>
-    <Route exact path="/" component={Page.Home} />
-    <Route path="/sign-in" component={Page.SignIn} />
+    <Router>
+      <Route exact path="/" component={Page.Home} />
+      <Route path="/sign-in" component={Page.SignIn} />
+      <Route path="/profile/:uid" component={Page.Profile} />
+      <Route path="/leaderboard" component={Page.Leaderboard} />
+      <ProtectedRoute path="/play" component={Page.Play} /> 
+      <ProtectedRoute path="/game" component={Page.Game} />
+      <Route path="*" component={Page.NotFound} />
+    </Router>
   </Layout>
 )
