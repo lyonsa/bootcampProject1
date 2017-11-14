@@ -20,6 +20,8 @@ export const WATCH_USER_PROFILE_SUCCESS = 'WATCH_USER_PROFILE_SUCCESS'
 export const WATCH_USER_PROFILE_ERROR = 'WATCH_USER_PROFILE_ERROR'
 export const UNWATCH_USER_PROFILE_SUCCESS = 'UNWATCH_USER_PROFILE_SUCCESS'
 export const UNWATCH_USER_PROFILE_ERROR = 'UNWATCH_USER_PROFILE_ERROR'
+export const RESUME_USER_SESSION_SUCCESS = 'RESUME_USER_SESSION_SUCCESS'
+export const RESUME_USER_SESSION_ERROR = 'RESUME_USER_SESSION_ERROR'
 
 // action creators
 export const signInSuccess = user => ({
@@ -93,6 +95,15 @@ export const unwatchUserProfileError = err => ({
   payload: err,
 })
 
+export const resumeUserSessionSuccess = err => ({
+  type: RESUME_USER_SESSION_SUCCESS,
+}) 
+
+export const resumeUserSessionError = err => ({
+  type: RESUME_USER_SESSION_ERROR,
+  payload: err,
+})
+
 export const signInWithGoogle = () => {
   return authenticate(new firebase.auth.GoogleAuthProvider())
 }
@@ -138,11 +149,13 @@ export const signOut = () => {
       const { user } = getState().auth 
       // unwatch user profile for changes
       dispatch(unwatchUserProfile())
-      // signout 
+      // go offline
+      await firebasePlayers.child(`${user.uid}/online`).remove()
+      // signout
       await firebaseAuth.signOut()
       dispatch(signOutSuccess())
     } catch (err) {
-      console.erorr(`Error sigining out: ${err}`)
+      console.error(`Error sigining out: ${err}`)
     }
   }
 }
@@ -153,7 +166,7 @@ export const setUserPresence = uid => {
       // get ref
       const isOnline = firebaseDb.ref('.info/connected')
       // register user presence callback
-      const onlineRef = await firebaseDb.ref(`players/${uid}/online`)
+      const onlineRef = await firebasePlayers.child(`${uid}/online`)
       isOnline.on('value', snap => dispatch(updateUserPresence(snap, onlineRef)))
       dispatch(setUserPresenceSuccess())
     } catch (err) {
@@ -247,8 +260,28 @@ export const setupNewUser = () => {
       })
       dispatch(setupNewUserSuccess())
     } catch (err) {
-      console.log('Error setting up new user')
+      console.log(`Error setting up new user: ${err}`)
       dispatch(setupNewUserError(err))
     }
   }
+}
+
+export const resumeUserSession = () => {
+  return async (dispatch, getState) => {
+    try {
+      const { user } = getState().auth
+      const { uid } = user
+      // set user presence
+      await dispatch(setUserPresence(uid))      
+      // set user profile
+      await dispatch(setUserProfile(uid))
+      // watch user profile
+      await dispatch(watchUserProfile(uid))
+      dispatch(resumeUserSessionSuccess())
+    } catch (err) {
+      console.error(`Error resuming user session: ${err}`)
+      dispatch(resumeUserSessionError(err))
+      dispatch(signOut())
+    }
+  } 
 }
