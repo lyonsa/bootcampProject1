@@ -1,5 +1,14 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { routerActions } from 'react-router-redux'
 import styled from 'styled-components'
+
+import { initQueueState } from '../actions/queue'
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({ pushRoute: routerActions.push, initQueueState }, dispatch)
+)
 
 const Root = styled.div`
   display: flex;
@@ -14,13 +23,23 @@ const Greeting = styled.h1`
   color: #fff;
 `
 
-export default () => (
-  <Root>
-    <Greeting>
-    ...Searching for a Competitor!
-    </Greeting>
-    <Greeting>
-    Please Wait For Another Player To Join You!
-    </Greeting>
-  </Root>
-)
+class Play extends Component {
+  componentWillMount() {
+    this.props.initQueueState()
+  }
+
+  render() {
+    return (
+      <Root>
+        <Greeting>
+          You're in the queue!
+        </Greeting>
+      </Root>
+    )
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Play)
