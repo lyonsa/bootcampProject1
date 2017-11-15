@@ -17,7 +17,10 @@ const Greeting = styled.h1`
 export default () => (
   <Root>
     <Greeting>
-      Play route
+    ...Searching for a Competitor!
+    </Greeting>
+    <Greeting>
+    Please Wait For Another Player To Join You!
     </Greeting>
   </Root>
 )

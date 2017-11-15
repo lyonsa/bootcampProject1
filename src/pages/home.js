@@ -37,7 +37,11 @@ const HomePage = ({ pushRoute, auth }) => {
   return (
     <Root>
       { authenticated ?
-        <Greeting>Hello there, {auth.user.displayName || 'User'}!</Greeting> :
+        <RaisedButton
+          label="Play a Game"
+          onTouchTap={() => pushRoute('/play')}
+          style={buttonMixin}
+        /> :
         <RaisedButton
           label="Sign in"
           onTouchTap={() => pushRoute('/sign-in')}
