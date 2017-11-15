@@ -6,16 +6,27 @@ import { bindActionCreators } from 'redux'
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
 
+import DrawerMenu from '../components'
 import { OptionsMenu } from '../components'
 
-const Header = ({ pushRoute }) => (
-  <AppBar
-    title="Auth App"
-    onTitleTouchTap={() => pushRoute('/')}
-    iconElementRight={<OptionsMenu />}
-    titleStyle={{cursor: 'pointer'}}
-  />
-)
+class Header extends Component {
+  constructor(props){
+    super(props);
+    this.state = { open: false }
+  }
+
+  render(){
+    return(
+      <AppBar
+        title="Auth App"
+        onTitleTouchTap={() => this.props.pushRoute('/')}
+        iconElementRight={<OptionsMenu />}
+        onLeftIconButtonTouchTap={this.props.handleToggle()}
+        titleStyle={{cursor: 'pointer'}}
+      />
+    )
+   }
+}
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({ pushRoute: routerActions.push }, dispatch)
