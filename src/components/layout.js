@@ -28,7 +28,10 @@ export default class extends React.Component {
   render(){
     return(
     <Root>
-      <Drawer isOpen={this.state.isOpen} />
+      <Drawer
+        handleToggle={this.handleToggle.bind(this)}
+        isOpen={this.state.isOpen}
+      />
       <Header
         handleToggle={this.handleToggle.bind(this)}
         isOpen={this.state.isOpen}

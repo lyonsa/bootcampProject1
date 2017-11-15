@@ -9,6 +9,11 @@ import { connect } from 'react-redux'
 
 class DrawerMenu extends React.Component {
 
+  closeAndPushRoute(route) {
+    this.props.handleToggle()
+    this.props.pushRoute(route)
+  }
+
   render() {
     return (
       <div>
@@ -19,15 +24,15 @@ class DrawerMenu extends React.Component {
         >
           <MenuItem
             primaryText="Profile"
-            onTouchTap={() => this.props.pushRoute('/profile/me')}
+            onTouchTap={() => this.closeAndPushRoute('/profile/me')}
           />
           <MenuItem
             primaryText="Home"
-            onTouchTap={() => this.props.pushRoute('/')}
+            onTouchTap={() => this.closeAndPushRoute('/')}
           /> 
           <MenuItem
             primaryText="Game"
-            onTouchTap={() => this.props.pushRoute('/game')}
+            onTouchTap={() => this.closeAndPushRoute('/game')}
           />        
          </Drawer>
       </div>
