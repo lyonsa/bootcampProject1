@@ -1,9 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Footer } from './'
+import { Footer, Drawer } from './'
 import { Header } from '../containers'
-import { Drawer } from './'
 
 const Root = styled.div`
   display: flex;
@@ -22,14 +21,18 @@ export default class extends React.Component {
   }
 
   handleToggle() {
-    this.setState({open: !this.state.isOpen});
+    console.log('toggled')
+    this.setState({isOpen: !this.state.isOpen});
   }
 
   render(){
     return(
     <Root>
-      {this.state.isOpen ? <Drawer />: null}
-      <Header handleToggle={() => this.handleToggle.bind(this)} isOpen={this.state.isOpen}/>
+      <Drawer isOpen={this.state.isOpen} />
+      <Header
+        handleToggle={this.handleToggle.bind(this)}
+        isOpen={this.state.isOpen}
+      />
       <Main>
         { this.props.children }
       </Main>

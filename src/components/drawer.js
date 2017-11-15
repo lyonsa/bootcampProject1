@@ -10,11 +10,11 @@ export default class DrawerMenu extends React.Component {
   render() {
     return (
       <div>
-        <RaisedButton
-          label="Toggle Drawer"
-          onClick={this.handleToggle}
-        />
-        <Drawer>
+        <Drawer  
+          openSecondary={true}
+          open={this.props.isOpen}
+          docked={true}
+        >
           <MenuItem>Menu Item</MenuItem>
           <MenuItem>Menu Item 2</MenuItem>
         </Drawer>
