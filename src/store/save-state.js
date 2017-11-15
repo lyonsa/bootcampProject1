@@ -1,4 +1,5 @@
-export default (state) => {
+export default ({ auth }) => {
+  const state = { auth }
   try {
     const serializedState = JSON.stringify(state)
     localStorage.setItem('state', serializedState)
