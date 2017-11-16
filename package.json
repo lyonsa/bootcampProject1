@@ -2,7 +2,9 @@
   "name": "bootcamp-proj",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://unc-trivia-app-api.herokuapp.com/",
   "dependencies": {
+    "axios": "^0.17.1",
     "firebase": "^4.6.1",
     "history": "^4.7.2",
     "immutable": "^3.8.2",

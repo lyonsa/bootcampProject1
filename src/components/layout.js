@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import styled from 'styled-components'
+
+import LinearProgress from 'material-ui/LinearProgress'
 
 import { Footer, Drawer } from './'
 import { Header } from '../containers'
+import {
+  toggleDrawer,
+} from '../actions/layout'
 
 const Root = styled.div`
   display: flex;
@@ -14,33 +21,47 @@ const Main = styled.main`
   flex-grow: 1;
 `
 
-export default class extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = { isOpen: false }
-  }
+const Layout = ({ layout, toggleDrawer, children }) => (
+  <Root>
+    <Drawer
+      handleToggle={toggleDrawer}
+      isOpen={layout.drawerIsOpen}
+    />
+    <Header
+      handleToggle={toggleDrawer}
+      isOpen={layout.drawerIsOpen}
+      style={{
+        transition: 'visibility 500ms ease-in-out',
+        visibility: layout.fullscreen ? 'hidden' : 'visible',
+      }}
+    />
+    <LinearProgress color="#f06292" mode="indeterminate"
+      style={{
+        transition: 'visibility 300ms ease-out',
+        visibility: layout.progressBarShown ? 'visible' : 'hidden',
+      }}
+    />
+    <Main>
+      { children }
+    </Main>
+    <Footer
+      style={{
+        transition: 'visibility 500ms ease-in-out',
+        visibility: layout.fullscreen ? 'hidden' : 'visible',
+      }}
+    />
+  </Root>
+)
 
-  handleToggle() {
-    console.log('toggled')
-    this.setState({isOpen: !this.state.isOpen});
-  }
+const mapStateToProps = state => ({
+  layout: state.layout
+})
 
-  render(){
-    return(
-    <Root>
-      <Drawer
-        handleToggle={this.handleToggle.bind(this)}
-        isOpen={this.state.isOpen}
-      />
-      <Header
-        handleToggle={this.handleToggle.bind(this)}
-        isOpen={this.state.isOpen}
-      />
-      <Main>
-        { this.props.children }
-      </Main>
-      <Footer />
-    </Root>
-  )
-}
-}
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({ toggleDrawer }, dispatch)
+)
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Layout)
