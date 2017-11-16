@@ -11,7 +11,7 @@ const Root = styled.div`
 `
 
 const Greeting = styled.h1`
-  color: #fff;
+  color: #212121;
 `
 
 export default () => (

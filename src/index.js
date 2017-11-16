@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiProvider from 'material-ui/styles/MuiThemeProvider'
-import darkTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
+import lightTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 
 import App from './app'
 import store from './store'
@@ -20,7 +20,7 @@ console.log(`TYPEOF App -> ${typeof App}`)
 render(
 	<Provider store={store}>
 		<ConnectedRouter history={history}>
-			<MuiProvider muiTheme={getMuiTheme(darkTheme)}>
+			<MuiProvider muiTheme={getMuiTheme(lightTheme)}>
 				<div>
 					<App />
 				</div>

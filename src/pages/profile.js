@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { ProfileCard } from '../components'
 
 const Root = styled.div`
   display: flex;
@@ -11,30 +12,21 @@ const Root = styled.div`
 `
 
 const Greeting = styled.h1`
-  color: #fff;
+  color: #212121;
 `
 
 const Subheading = styled.strong`
-  color: #fff;
+  color: #212121;
 `
 
 class Profile extends Component {
-
-  componentDidMount() {
-    // fetch for profile here
-    // if profile not found,
-    // redirect to not found!
-  }
 
   render() {
     const { params } = this.props.match
     return (
       <Root>
-        <Greeting>
-          Profile route
-        </Greeting>
         <Subheading>
-          You were searching for { params.uid }
+          {<ProfileCard />}
         </Subheading>
       </Root>
     )

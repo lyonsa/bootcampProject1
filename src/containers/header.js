@@ -15,7 +15,7 @@ class Header extends Component {
     const { pushRoute, handleToggle, isOpen } = this.props    
     return(
       <AppBar
-        title="Auth App"
+        title="TriviaUp"
         onTitleTouchTap={() => pushRoute('/')}
         iconElementRight={<OptionsMenu />}
         onLeftIconButtonTouchTap={() => handleToggle()}
