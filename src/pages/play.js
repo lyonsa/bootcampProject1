@@ -5,12 +5,10 @@ import { routerActions } from 'react-router-redux'
 import styled from 'styled-components'
 
 import { initQueueState } from '../actions/queue'
+import { setProgressBarShown } from '../actions/layout'
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({ pushRoute: routerActions.push, initQueueState }, dispatch)
-)
-
-const Root = styled.div`
+const Root = styled.main`
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,6 +23,8 @@ const Greeting = styled.h1`
 
 class Play extends Component {
   componentWillMount() {
+    console.log(this.props)
+    this.props.setProgressBarShown(true)
     this.props.initQueueState()
   }
 
@@ -32,12 +32,24 @@ class Play extends Component {
     return (
       <Root>
         <Greeting>
-          You're in the queue!
+          Searching for a game...
         </Greeting>
       </Root>
     )
   }
+
+  componentWillUnmount() {
+    this.props.setProgressBarShown(false)
+  }
 }
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    pushRoute: routerActions.push,
+    initQueueState,
+    setProgressBarShown,
+  }, dispatch)
+)
 
 export default connect(
   null,
