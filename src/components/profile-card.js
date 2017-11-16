@@ -80,7 +80,7 @@ class ProfileCard extends Component {
           <CardText expandable={true}>
             <TextField
               user={user}
-              hintText={user.displayName}
+              hintText={user ? user.displayName : null}
               floatingLabelText="New Display Name"
               type="text"
               value={this.state.value}
