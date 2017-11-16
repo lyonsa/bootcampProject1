@@ -17,6 +17,7 @@ const Greeting = styled.h1`
 class Leaderboard extends Component {
   componentWillMount() {
     // fetch leaderboard here
+    
   }
 
   render() {
