@@ -12,7 +12,8 @@ const mapDispatchToProps = dispatch => (
 )
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  game: state.game,
 })
 
 const Root = styled.div`
@@ -32,11 +33,11 @@ const buttonMixin = {
   margin: '7.5px'
 }
 
-const HomePage = ({ pushRoute, auth }) => {
+const HomePage = ({ pushRoute, auth, game }) => {
   const { authenticated, user } = auth
   return (
     <Root>
-      <Greeting>Game route</Greeting>
+      <Greeting>{ game.gid }</Greeting>
     </Root>
   )
 }
