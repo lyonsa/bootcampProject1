@@ -26,7 +26,7 @@ class Question extends Component {
   }
 
   initTimer() {
-    this.state.timer = setInterval(
+    this.timer = setInterval(
       this.onTick.bind(this),
       100
     )
@@ -43,13 +43,16 @@ class Question extends Component {
     }
   }
 
-  componentWillReceiveProps(newProps) {
-    // see if component is recieving new question
-    if (newProps && newProps.index !== this.props.index) {
+  componentDidUpdate(oldProps) {
+    if (this.props && this.props.index !== oldProps.index) {
+      console.log('UPDATING QUESTION COMPONENT')
+      console.log('THIS.PROPS.INDEX !== OLDPROPS.INDEX')
+      // clear timeout
+      clearTimeout(this.timer)   
       // reset state
       this.setState({
         ...initalState
-      })
+      })   
       // init timer
       this.initTimer()
     }
@@ -57,7 +60,7 @@ class Question extends Component {
 
   revealAnswer() {
     // clear timer
-    clearInterval(this.state.timer)
+    clearInterval(this.timer)
     // disable selections
     this.setState({
       selectionDisabled: true,
@@ -65,13 +68,18 @@ class Question extends Component {
     })
     // get next question in 3 seconds
     this.timer = setTimeout(
-      this.props.getNextQuestion,
+      this.getNextQuestion.bind(this),
       3000
     )
   }
 
+  getNextQuestion() {
+    console.log('Getting next question!!!')
+    this.props.getNextQuestion()
+  }
+
   handleUserAnswer(e, value) {
-    console.log('value', value)
+    if (this.state.selection) return
     // get user answer and correct
     const { answer, correct, index } = value
     this.setState({
@@ -81,7 +89,7 @@ class Question extends Component {
     if (correct) this.props.incrementPlayerScore(100)
     // if answer push answer
     if (index) this.props.setCurrentQuestionAnswer(
-      this.props.index,
+      index,
       answer,
       correct
     )
@@ -110,11 +118,12 @@ class Question extends Component {
           }}
         />
         <h1>
-          {question.question}
+          {question && question.question ? question.question : null}
         </h1>
         <RadioButtonGroup onChange={selectionDisabled ? null : this.handleUserAnswer.bind(this)}>
-          {question.answers.map((answer, index) =>
+          {question && question.answers ? question.answers.map((answer, index) =>
             <RadioButton
+              name={index}
               key={index}
               label={answer[0]}            
               value={{ answer: answer[0], correct: answer[1], index }}
@@ -125,7 +134,7 @@ class Question extends Component {
                 ) : '#000'
               }}
             />
-          )}
+          ) : null}
         </RadioButtonGroup>
       </div>
     )

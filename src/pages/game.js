@@ -73,11 +73,18 @@ class Game extends Component {
 
   shouldComponentUpdate(newState) {
     // hook in to index
-    if (newState.index > 4) return false
-    else return true
+    if (newState.index >= 4) {
+      console.log('New state index -> ', newState.index)
+      this.props.pushRoute('/')
+      return false
+    } else if (newState.index === 4) {
+      console.log('new state at index 4', newState)
+    }
+    return true
   }
 
   getNextQuestion() {
+    if (this.state.index > 4) return
     this.setState({
       index: this.state.index + 1
     })

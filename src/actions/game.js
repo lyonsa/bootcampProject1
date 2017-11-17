@@ -152,9 +152,9 @@ export const setCurrentQuestionAnswer = (index, answer, correct) => {
   return async (dispatch, getState) => {
     try {
       // get game and user id
-      const { game, user } = getState()
+      const { game, auth } = getState()
       const { gid } = game
-      const { uid } = user
+      const { uid } = auth.user
       // set answer
       await firebaseGames.child(gid)
         .child('answers')
