@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { routerActions } from 'react-router-redux'
+import he from 'he'
 
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 
@@ -43,8 +44,8 @@ class Question extends Component {
     }
   }
 
-  componentDidUpdate(oldProps) {
-    if (this.props && this.props.index !== oldProps.index) {
+  componentWillReceiveProps(newProps) {
+    if (newProps && newProps.index !== this.props.index) {
       console.log('UPDATING QUESTION COMPONENT')
       console.log('THIS.PROPS.INDEX !== OLDPROPS.INDEX')
       // clear timeout
@@ -56,6 +57,11 @@ class Question extends Component {
       // init timer
       this.initTimer()
     }
+  }
+
+  componentwillUnmount() {
+    clearInterval(this.timer)
+    clearTimeout(this.timer)
   }
 
   revealAnswer() {
@@ -74,8 +80,12 @@ class Question extends Component {
   }
 
   getNextQuestion() {
-    console.log('Getting next question!!!')
-    this.props.getNextQuestion()
+    const { index } = this.props
+    if (index < 4) {
+      this.props.getNextQuestion()
+    } if (index >= 4) {
+      this.props.finishCurrentGame()
+    }
   }
 
   handleUserAnswer(e, value) {
@@ -88,8 +98,8 @@ class Question extends Component {
     // increment score if correct
     if (correct) this.props.incrementPlayerScore(100)
     // if answer push answer
-    if (index) this.props.setCurrentQuestionAnswer(
-      index,
+    if (this.props.index) this.props.setCurrentQuestionAnswer(
+      this.props.index,
       answer,
       correct
     )
@@ -118,14 +128,14 @@ class Question extends Component {
           }}
         />
         <h1>
-          {question && question.question ? question.question : null}
+          {question && question.question ? he.decode(question.question) : null}
         </h1>
         <RadioButtonGroup onChange={selectionDisabled ? null : this.handleUserAnswer.bind(this)}>
           {question && question.answers ? question.answers.map((answer, index) =>
             <RadioButton
               name={index}
               key={index}
-              label={answer[0]}            
+              label={he.decode(answer[0])}            
               value={{ answer: answer[0], correct: answer[1], index }}
               disabled={selectionDisabled && selection && index !== selection}
               labelStyle={{
