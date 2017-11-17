@@ -173,7 +173,7 @@ export const incrementPlayerScore = (factor) => {
   return async (dispatch, getState) => {
     try {
       // get user id
-      const { uid } = getState().user
+      const { uid } = getState().auth.user
       // increment score by factor
       await firebasePlayers.child(uid)
         .child('lifetimeScore')

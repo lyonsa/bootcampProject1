@@ -26,7 +26,6 @@ export default () => (
       <Route path="/sign-in" component={Page.SignIn} />
       <Route path="/profile/:uid" component={Page.Profile} />
       <Route path="/leaderboard" component={Page.Leaderboard} />
-      <Route path="/test-page" component={Page.Test} />
       <ProtectedRoute path="/play" component={Page.Play} /> 
       <ProtectedRoute path="/game" component={Page.Game} />
       <Route component={Page.NotFound} />
