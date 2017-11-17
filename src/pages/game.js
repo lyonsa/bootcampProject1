@@ -9,6 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import { setProgressBarShown } from '../actions/layout'
 import { initGame } from '../actions/game'
+import { Question } from '../components'
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
@@ -81,9 +82,7 @@ class Game extends Component {
               Waiting for { game && !game.uid2 ? 'player 2' : 'questions' }...
             </Message>
           :
-            <Message>
-              Game will start soon...
-            </Message>
+            <Question index={this.state.index}/>
         }
       </Root>
     )

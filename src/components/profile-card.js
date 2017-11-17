@@ -32,12 +32,10 @@ class ProfileCard extends Component {
   };
 
   handleExpandChange = (expanded) => {
-    console.log('expand')
     this.setState({expanded: expanded});
   };
 
   handleReduce = () => {
-    console.log('reduce')
     this.setState({expanded: false});
   };
 
@@ -47,9 +45,7 @@ class ProfileCard extends Component {
 
   keyPress(event){
     if(event.keyCode == 13){
-      console.log('value', event.target.value);
       firebasePlayers.child(this.props.auth.user.uid).update({ displayName: event.target.value })
-      console.log(firebasePlayers.child(this.props.auth.user.uid).displayName)
       this.handleReduce();
 
     }
