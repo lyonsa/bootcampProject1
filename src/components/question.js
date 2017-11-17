@@ -98,7 +98,7 @@ class Question extends Component {
     // increment score if correct
     if (correct) this.props.incrementPlayerScore(100)
     // if answer push answer
-    if (this.props.index) this.props.setCurrentQuestionAnswer(
+    if (this.props.index !== null) this.props.setCurrentQuestionAnswer(
       this.props.index,
       answer,
       correct
