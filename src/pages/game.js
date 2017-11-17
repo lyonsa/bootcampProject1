@@ -12,6 +12,7 @@ import { Question } from '../components'
 import { 
   incrementPlayerScore,
   setCurrentQuestionAnswer,
+  finishCurrentGame,
   initGame
 } from '../actions/game'
 
@@ -20,6 +21,7 @@ const mapDispatchToProps = dispatch => (
     pushRoute: routerActions.push,
     setProgressBarShown,
     initGame,
+    finishCurrentGame,
     incrementPlayerScore,
     setCurrentQuestionAnswer,
   }, dispatch)
@@ -71,20 +73,22 @@ class Game extends Component {
     this.props.setProgressBarShown(false)
   }
 
-  shouldComponentUpdate(newState) {
-    // hook in to index
-    if (newState.index > 4) return false
-    else return true
-  }
-
   getNextQuestion() {
-    this.setState({
-      index: this.state.index + 1
-    })
+    if (this.state.index > 4) {
+      return this.props.pushRoute('/')
+    } else {
+      this.setState({
+        index: this.state.index + 1
+      })
+    }
   }
 
   render() {
-    const { incrementPlayerScore, setCurrentQuestionAnswer } = this.props
+    const { 
+      incrementPlayerScore,
+      setCurrentQuestionAnswer,
+      finishCurrentGame
+    } = this.props
     const { game } = this.props.game
     const { index } = this.state
     console.log(this.props)
@@ -102,6 +106,7 @@ class Game extends Component {
               getNextQuestion={this.getNextQuestion.bind(this)}
               incrementPlayerScore={incrementPlayerScore}
               setCurrentQuestionAnswer={setCurrentQuestionAnswer}
+              finishCurrentGame={finishCurrentGame}
             />
         }
       </Root>
