@@ -8,14 +8,20 @@ import { routerActions } from 'react-router-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { setProgressBarShown } from '../actions/layout'
-import { initGame } from '../actions/game'
 import { Question } from '../components'
+import { 
+  incrementPlayerScore,
+  setCurrentQuestionAnswer,
+  initGame
+} from '../actions/game'
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
     pushRoute: routerActions.push,
     setProgressBarShown,
-    initGame
+    initGame,
+    incrementPlayerScore,
+    setCurrentQuestionAnswer,
   }, dispatch)
 )
 
@@ -65,14 +71,22 @@ class Game extends Component {
     this.props.setProgressBarShown(false)
   }
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate(newState) {
     // hook in to index
-    // if index > 5; route to game-log
-    return true
+    if (newState.index > 4) return false
+    else return true
+  }
+
+  getNextQuestion() {
+    this.setState({
+      index: this.state.index + 1
+    })
   }
 
   render() {
+    const { incrementPlayerScore, setCurrentQuestionAnswer } = this.props
     const { game } = this.props.game
+    const { index } = this.state
     console.log(this.props)
     return (
       <Root>
@@ -82,7 +96,13 @@ class Game extends Component {
               Waiting for { game && !game.uid2 ? 'player 2' : 'questions' }...
             </Message>
           :
-            <Question index={this.state.index}/>
+            <Question
+              index={index}
+              question={game.questions[index]}
+              getNextQuestion={this.getNextQuestion.bind(this)}
+              incrementPlayerScore={incrementPlayerScore}
+              setCurrentQuestionAnswer={setCurrentQuestionAnswer}
+            />
         }
       </Root>
     )
