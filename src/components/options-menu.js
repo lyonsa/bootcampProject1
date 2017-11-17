@@ -19,12 +19,12 @@ import { signOut } from '../actions/auth'
 class OptionsMenu extends Component {
 
   render() {
-    const { authenticated, user } = this.props.auth
+    const { authenticated, profile, user } = this.props.auth
     return (
       <IconMenu
         iconButtonElement={
           <IconButton style={authenticated ? {padding: '0px'} : null}>
-            { authenticated ? <Avatar src={user.photoURL} padding="0" /> : <MoreVertIcon color="#000" /> }
+            { authenticated ? <Avatar src={user.photoURL} padding="0" /> : <MoreVertIcon color="#fff" /> }
           </IconButton>
         }
         targetOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -32,7 +32,7 @@ class OptionsMenu extends Component {
       >
         { authenticated ?
           <div>
-            <Subheader>Hello, {user.displayName || 'User'}!</Subheader>
+            <Subheader>Hello { profile ? profile.displayName : ''}</Subheader>
             <MenuItem
               primaryText="My Profile"
               rightIcon={<AccountIcon />}

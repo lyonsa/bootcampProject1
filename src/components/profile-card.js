@@ -56,12 +56,12 @@ class ProfileCard extends Component {
   }
 
   render() {
-    const { authenticated, user } = this.props.auth
+    const { authenticated, user, profile } = this.props.auth
     return (
         <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
         { authenticated ? 
           <CardHeader
-            title={user.displayName}
+            title={profile.displayName ? profile.displayName : profile}
             subtitle="Profile"
             avatar={user.photoURL}
           /> : null}
@@ -71,7 +71,7 @@ class ProfileCard extends Component {
               You are signed in and ready to play!
             </CardText>
             <CardText>
-              Other players will see your name as <u>{ user.displayName }</u>
+              Other players will see your name as <u>{ profile.displayName ? profile.displayName : profile }</u>
             </CardText>
           </div> : 
           <CardText>

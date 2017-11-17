@@ -217,7 +217,7 @@ export const watchUserProfile = uid => {
     try {
       // set firebase listener
       const profileUpdateCallback = firebasePlayers.child(uid)
-        .on('child_changed', snap => dispatch(updateUserProfile(snap)))
+        .on('value', snap => dispatch(updateUserProfile(snap)))
       dispatch(watchUserProfileSuccess(profileUpdateCallback))
     } catch (err) {
       console.error(`Error watching user profile: ${err}`)
@@ -233,7 +233,7 @@ export const unwatchUserProfile = uid => {
       const { user, profileUpdateCallback } = getState().auth
       const { uid } = user
       // remove listener
-      firebasePlayers.child(uid).off('child_changed', profileUpdateCallback)
+      firebasePlayers.child(uid).off('value', profileUpdateCallback)
       dispatch(unwatchUserProfileSuccess())
     } catch (err) {
       console.error(`Error unwatching user profile: ${err}`)
