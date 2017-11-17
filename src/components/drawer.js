@@ -23,17 +23,18 @@ class DrawerMenu extends React.Component {
           docked={true}
         >
           <MenuItem
-            primaryText="Profile"
-            onTouchTap={() => this.closeAndPushRoute('/profile/me')}
-          />
-          <MenuItem
             primaryText="Home"
             onTouchTap={() => this.closeAndPushRoute('/')}
           /> 
           <MenuItem
-            primaryText="Game"
-            onTouchTap={() => this.closeAndPushRoute('/game')}
-          />        
+            primaryText="Play"
+            onTouchTap={() => this.closeAndPushRoute('/play')}
+          />
+          <MenuItem
+            primaryText="Leaderboard"
+            onTouchTap={() => this.closeAndPushRoute('/leaderboard')}
+          />
+
          </Drawer>
       </div>
     );
