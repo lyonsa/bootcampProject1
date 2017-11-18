@@ -39,7 +39,7 @@ export default ({ player1, player2, player1Score, player2Score, showScore, showN
         {player1 && showName ? player1.displayName.split(' ')[0] : null}
       </Label>
       <Label key={1}>
-        {player1Score && showScore ? player1Score : null}
+        {player1Score && showScore ? player1Score : '0'}
       </Label>
     </Player>
     <strong>vs</strong>
@@ -49,7 +49,7 @@ export default ({ player1, player2, player1Score, player2Score, showScore, showN
         {player2 && showName ? player2.displayName.split(' ')[0] : null}
       </Label>
       <Label key={1}>
-        {player2Score && showScore ? player2Score : null}
+        {player2Score && showScore ? player2Score : '0'}
       </Label>
     </Player>
   </Root>

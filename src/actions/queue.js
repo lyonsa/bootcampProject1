@@ -228,7 +228,7 @@ const setupNewGame = async uid => {
     const gid = await gameRef.key
     // inject questions via api
     await axios.post('https://unc-trivia-app-api.herokuapp.com/games/init-game', {
-      category: 'computer science',
+      category: 'film',
       gid
     })
     return gid
