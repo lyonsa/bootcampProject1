@@ -9,6 +9,6 @@ const Root = styled.div`
 
 export default () => (
   <Root>
-    <p>&copy; 2017 Charles Kenney</p>
+    <p>&copy; 2017 TriviaUp  Inc.</p>
   </Root>
 )
