@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import { routerActions } from 'react-router-redux'
 
 import RaisedButton from 'material-ui/RaisedButton'
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 import { setProgressBarShown } from '../actions/layout'
 import { Question } from '../components'
@@ -42,7 +43,7 @@ const Root = styled.div`
 `
 
 const Message = styled.h1`
-  color: #212121;
+  color: #fff;
 `
 
 class Game extends Component {

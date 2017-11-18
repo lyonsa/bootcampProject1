@@ -18,7 +18,7 @@ const Root = styled.main`
 `
 
 const Greeting = styled.h1`
-  color: #212121;
+  color: #fff;
 `
 
 class Play extends Component {

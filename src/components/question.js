@@ -7,6 +7,8 @@ import { routerActions } from 'react-router-redux'
 import he from 'he'
 
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
 
 import styled from 'styled-components'
 
@@ -75,7 +77,7 @@ class Question extends Component {
     // get next question in 3 seconds
     this.timer = setTimeout(
       this.getNextQuestion.bind(this),
-      3000
+      2000
     )
   }
 
@@ -107,7 +109,7 @@ class Question extends Component {
   }
 
   render() {
-    const { question } = this.props
+    const { question, index } = this.props
     const {
       completed,
       time,
@@ -115,21 +117,33 @@ class Question extends Component {
       answersShown,
       selectionDisabled,
     } = this.state
+
     return (
-      <div>
-        <CircularProgress
-          mode="determinate"
-          value={time}
-          color={time > 30 ? '#00bcd4' : '#d40086'}
-          thickness={9}
-          style={{
-            transform: 'scale(-1, -1) rotate(90deg)',
-            transition: 'color ease-out 1s'
-          }}
-        />
-        <h1>
+      <Card style={{width: '70%'}}>
+        <CardText containerStyle={'inline'} children={'<h1>hi</h1>'}>
+          <CircularProgress
+            mode="determinate"
+            value={time}
+            color={time > 30 ? '#00bcd4' : '#d40086'}
+            thickness={9}
+            style={{
+              display: 'inline',
+              transform: 'scale(-1, -1) rotate(90deg)',
+              transition: 'color ease-out 1s',
+              paddingTop: '15px',
+              paddingLeft: '20%'
+            }}
+          />
+          <h1 style={{float: 'right', 
+          top: '50%', margin: '0', 
+          paddingRight: '20%', 
+          paddingTop: '3px', 
+          color: '#00bcd4'}}>{index}/5</h1>
+        </CardText>
+        <CardText style={{'text-align': 'center', float: 'clear', }}>
           {question && question.question ? he.decode(question.question) : null}
-        </h1>
+        </CardText>
+        <CardText>
         <RadioButtonGroup onChange={selectionDisabled ? null : this.handleUserAnswer.bind(this)}>
           {question && question.answers ? question.answers.map((answer, index) =>
             <RadioButton
@@ -141,12 +155,14 @@ class Question extends Component {
               labelStyle={{
                 color: answersShown ? (
                   answer[1] ? '#43a047' : '#d32f2f'
-                ) : '#000'
+                ) : '#000',
+                fontWeight: answersShown ? 'bold' : 'normal'
               }}
             />
           ) : null}
         </RadioButtonGroup>
-      </div>
+        </CardText>
+      </Card>
     )
   }
 
