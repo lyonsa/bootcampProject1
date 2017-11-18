@@ -1,5 +1,5 @@
 import { SET_CURRENT_GAME_SUCCESS } from '../actions/queue'
-import { UPDATE_GAME_STATE_SUCCESS } from '../actions/game'
+import { UPDATE_GAME_STATE_SUCCESS, FINISH_CURRENT_GAME_SUCCESS } from '../actions/game'
 
 const initalState = {
   gid: null,
@@ -19,6 +19,11 @@ export default (state = initalState, action) => {
       return {
         ...state,
         game: payload,
+      }
+    
+    case FINISH_CURRENT_GAME_SUCCESS:
+      return {
+        ...initalState
       }
 
     default:
