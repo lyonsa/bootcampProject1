@@ -1,9 +1,10 @@
 import { SET_CURRENT_GAME_SUCCESS } from '../actions/queue'
-import { UPDATE_GAME_STATE_SUCCESS, FINISH_CURRENT_GAME_SUCCESS } from '../actions/game'
+import { UPDATE_GAME_STATE_SUCCESS, FINISH_CURRENT_GAME_SUCCESS, FETCH_OPPONENT_SUCCESS } from '../actions/game'
 
 const initalState = {
   gid: null,
   game: null,
+  opponent: null,
 }
 
 export default (state = initalState, action) => {
@@ -19,6 +20,12 @@ export default (state = initalState, action) => {
       return {
         ...state,
         game: payload,
+      }
+    
+    case FETCH_OPPONENT_SUCCESS:
+      return {
+        ...state,
+        opponent: payload,
       }
     
     case FINISH_CURRENT_GAME_SUCCESS:
