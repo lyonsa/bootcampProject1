@@ -45,9 +45,10 @@ class ProfileCard extends Component {
 
   keyPress(event){
     if(event.keyCode == 13){
-      firebasePlayers.child(this.props.auth.user.uid).update({ displayName: event.target.value })
-      this.handleReduce();
-
+      if (event.target.value !== ''){
+        firebasePlayers.child(this.props.auth.user.uid).update({ displayName: event.target.value })
+        this.handleReduce();
+      }
     }
   }
 
