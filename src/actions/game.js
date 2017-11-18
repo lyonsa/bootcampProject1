@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+import { routerActions } from 'react-router-redux'
 
 import { firebasePlayers, firebaseGames, firebaseQueue } from '../firebase'
 
@@ -152,9 +153,9 @@ export const setCurrentQuestionAnswer = (index, answer, correct) => {
   return async (dispatch, getState) => {
     try {
       // get game and user id
-      const { game, user } = getState()
+      const { game, auth } = getState()
       const { gid } = game
-      const { uid } = user
+      const { uid } = auth.user
       // set answer
       await firebaseGames.child(gid)
         .child('answers')
@@ -182,6 +183,20 @@ export const incrementPlayerScore = (factor) => {
     } catch (err) {
       console.error(`Error incrementing player score: ${err.message}`)
       dispatch(incrementPlayerScoreError(err))
+    }
+  }
+}
+
+export const finishCurrentGame = () => {
+  return (dispatch, getState) => {
+    try {
+      const { gid } = getState().game
+      dispatch(routerActions.push(`/game-log/${gid}`))
+      // redirect to game-log route
+      dispatch(finishCurrentGameSuccess())
+    } catch (err) {
+      console.error(`Error finishing game state: ${err.message}`)
+      dispatch(finishCurrentGameError(err))
     }
   }
 }
