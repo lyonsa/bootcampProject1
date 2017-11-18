@@ -21,6 +21,9 @@ export const INCREMENT_PLAYER_SCORE_SUCCESS = 'INCREMENT_PLAYER_SCORE_SUCCESS'
 export const INCREMENT_PLAYER_SCORE_ERROR = 'INCREMENT_PLAYER_SCORE_ERROR'
 export const FINISH_CURRENT_GAME_SUCCESS = 'FINISH_CURRENT_GAME_SUCCESS'
 export const FINISH_CURRENT_GAME_ERROR = 'FINISH_CURRENT_GAME_ERROR'
+export const FETCH_OPPONENT_SUCCESS = 'FETCH_OPPONENT_SUCCESS'
+export const FETCH_OPPONENT_ERROR = 'FETCH_OPPONENT_ERROR'
+
 
 const initGameSuccess = () => ({
   type: INIT_GAME_SUCCESS
@@ -87,6 +90,16 @@ const updateGameStateError = err => ({
   payload: err,
 })
 
+const fetchOpponentSuccess = opponent => ({
+  type: FETCH_OPPONENT_SUCCESS,
+  payload: opponent,
+})
+
+const fetchOpponentError = err => ({
+  type: FETCH_OPPONENT_ERROR,
+  payload: err,
+})
+
 export const initGame = () => {
   return async (dispatch, getState) => {
     try {
@@ -130,12 +143,36 @@ const unwatchGameState = () => {
   }
 }
 
-const onGameStateUpdate = snap => {
-  return dispatch => {
+const fetchOpponent = uid => {
+  return async dispatch => {
     try {
+      // fetch opponent
+      const ref = firebasePlayers.child(uid)
+      const snap = await ref.once('value')
+      const opponent = snap.val()
+      dispatch(fetchOpponentSuccess(opponent))
+    } catch (err) {
+      console.error(`Error fetching opponent: ${err.message}`)
+      dispatch(fetchOpponentError(err))
+    }
+  }
+}
+
+const onGameStateUpdate = snap => {
+  return (dispatch, getState) => {
+    try {
+      const state = getState()
+      const { opponent } = state.game
+      const { uid } = state.auth.user
       // get game state
       const game = snap.val()
       console.log('INCOMING GAME ->', game)
+      // fetch opponent
+      if (game.uid2 && !opponent) {
+        dispatch(fetchOpponent(
+          game.uid2 === uid ? game.uid1 : game.uid2
+        ))
+      }
       // remove listener if questions and uid are present
       if (game.uid2 && game.questions) {
         dispatch(unwatchGameState())
