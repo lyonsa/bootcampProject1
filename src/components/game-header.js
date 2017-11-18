@@ -7,7 +7,7 @@ const Root = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  color: #fff
+  color: ${props => props.blackText ? '#000' : '#fff'};
 `
 
 const Player = styled.div`
@@ -27,24 +27,30 @@ const Avatar = styled.img`
   }
 `
 
-const Score = styled.strong`
-  margin-top: 10px;
+const Label = styled.strong`
+  margin: 10px 0;
 `
 
-export default ({ player1, player2 }) => (
-  <Root>
+export default ({ player1, player2, player1Score, player2Score, showScore, showName, blackText }) => (
+  <Root blackText={blackText}>
     <Player>
-      <Avatar src={player1 ? player1.photoURL : null} />
-      <Score>
-        {player1 ? player1.lifetimeScore : null}
-      </Score>
+      <Avatar src={player1 && showName ? player1.photoURL : null} />
+      <Label key={0}>
+        {player1 && showName ? player1.displayName.split(' ')[0] : null}
+      </Label>
+      <Label key={1}>
+        {player1Score && showScore ? player1Score : null}
+      </Label>
     </Player>
     <strong>vs</strong>
     <Player>
       <Avatar src={player2 ? player2.photoURL : null} />
-      <Score>
-        {player2 ? player2.lifetimeScore : null}
-      </Score>
+      <Label key={0}>
+        {player2 && showName ? player2.displayName.split(' ')[0] : null}
+      </Label>
+      <Label key={1}>
+        {player2Score && showScore ? player2Score : null}
+      </Label>
     </Player>
   </Root>
 )

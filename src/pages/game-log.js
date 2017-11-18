@@ -8,7 +8,7 @@ import { Avatar } from 'material-ui'
 import { firebaseGames, firebasePlayers } from '../firebase/index';
 import { setProgressBarShown } from '../actions/layout'
 
-import { GameHeader } from '../components'
+import { GameHeader, CenteredRoot } from '../components'
 
 class GameLog extends Component {
 
@@ -57,11 +57,13 @@ class GameLog extends Component {
   updatePlayer(snap, index) {
     if (index === 0) {
       this.setState({
-        player1: snap.val()
+        player1Id: snap.key,
+        player1: snap.val(),
       })
     } else {
       this.setState({
-        player2: snap.val()
+        player2Id: snap.key,
+        player2: snap.val(),
       })
     }
   }
@@ -109,15 +111,54 @@ class GameLog extends Component {
     this.props.setProgressBarShown(false)
   }
 
+  calculatePlayerScore(index) {
+    const { game, player1Id, player2Id } = this.state
+    const id = index === 1 ? player1Id : player2Id
+    if (game && game.answers && game.answers[id]) {
+      return game.answers[id].filter(a => a.correct).length * 100
+    }
+    return 0
+  }
+
+  getPlayerFirstName(index) {
+    const { player1, player2 } = this.state
+    const player = index === 1 ? player1 : player2
+    return player ? player.displayName.split(' ')[0] : ''
+  }
+
   render() {
-    const { game, player1, player2 } = this.state
+    const {
+      game,
+      player1,
+      player2,
+      player1Id,
+      player2Id
+    } = this.state
+    const score1 = this.calculatePlayerScore(1)
+    const score2 = this.calculatePlayerScore(2)
+    const name1 = this.getPlayerFirstName(1)
+    const name2 = this.getPlayerFirstName(2)
     return (
-      <main>
+      <CenteredRoot style={{minHeight: '80vh'}}>
         {
           !game || !player1 || !player2 ? <h1>Fetching game...</h1> :
-            <GameHeader player1={player1} player2={player2} />
+            <div>
+              <GameHeader
+                showName
+                showScore
+                player1={player1}
+                player2={player2}
+                player1Score={score1}
+                player2Score={score2}
+              />
+              <strong style={{color: '#fff'}}>
+                {score1 === score2 ? 'Draw!' : (
+                  score1 > score2 ? `${name1} won!` : `${name2} won!`
+                )}
+              </strong>
+            </div>
         }
-      </main>
+      </CenteredRoot>
     )
   }
 

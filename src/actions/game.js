@@ -170,7 +170,7 @@ const onGameStateUpdate = snap => {
       // fetch opponent
       if (game.uid2 && !opponent) {
         dispatch(fetchOpponent(
-          game.uid2 === uid ? game.uid2 : game.uid1
+          game.uid2 === uid ? game.uid1 : game.uid2
         ))
       }
       // remove listener if questions and uid are present

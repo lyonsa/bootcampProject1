@@ -9,7 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 import { setProgressBarShown } from '../actions/layout'
-import { Question } from '../components'
+import { Question, GameHeader } from '../components'
 import { 
   incrementPlayerScore,
   setCurrentQuestionAnswer,
@@ -44,6 +44,15 @@ const Root = styled.div`
 
 const Message = styled.h1`
   color: #fff;
+`
+
+const MainGame = styled.section`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
 
 class Game extends Component {
@@ -88,9 +97,10 @@ class Game extends Component {
     const { 
       incrementPlayerScore,
       setCurrentQuestionAnswer,
-      finishCurrentGame
+      finishCurrentGame,
     } = this.props
-    const { game } = this.props.game
+    const { game, opponent } = this.props.game
+    const { profile } = this.props.auth
     const { index } = this.state
     console.log(this.props)
     return (
@@ -101,14 +111,27 @@ class Game extends Component {
               Waiting for { game && !game.uid2 ? 'player 2' : 'questions' }...
             </Message>
           :
-            <Question
-              index={index}
-              question={game.questions[index]}
-              getNextQuestion={this.getNextQuestion.bind(this)}
-              incrementPlayerScore={incrementPlayerScore}
-              setCurrentQuestionAnswer={setCurrentQuestionAnswer}
-              finishCurrentGame={finishCurrentGame}
-            />
+            <Card style={{
+              width: '70%',
+              padding: '50px 0'
+            }}>
+              <MainGame>
+                <GameHeader
+                  blackText
+                  showName
+                  player1={profile}
+                  player2={opponent}
+                />
+                <Question
+                  index={index}
+                  question={game.questions[index]}
+                  getNextQuestion={this.getNextQuestion.bind(this)}
+                  incrementPlayerScore={incrementPlayerScore}
+                  setCurrentQuestionAnswer={setCurrentQuestionAnswer}
+                  finishCurrentGame={finishCurrentGame}
+                />
+            </MainGame>
+          </Card>
         }
       </Root>
     )

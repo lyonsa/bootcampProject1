@@ -119,7 +119,7 @@ class Question extends Component {
     } = this.state
 
     return (
-      <Card style={{width: '70%'}}>
+      <div style={{width:'100%'}}>
         <CardText containerStyle={'inline'} children={'<h1>hi</h1>'}>
           <CircularProgress
             mode="determinate"
@@ -128,7 +128,7 @@ class Question extends Component {
             thickness={9}
             style={{
               display: 'inline',
-              transform: 'scale(-1, -1) rotate(90deg)',
+              transform: 'scale(-1, -1) rotate(100deg)',
               transition: 'color ease-out 1s',
               paddingTop: '15px',
               paddingLeft: '20%'
@@ -144,7 +144,10 @@ class Question extends Component {
           {question && question.question ? he.decode(question.question) : null}
         </CardText>
         <CardText>
-        <RadioButtonGroup onChange={selectionDisabled ? null : this.handleUserAnswer.bind(this)}>
+        <RadioButtonGroup
+          style={{ margin: '0 50px' }}
+          onChange={selectionDisabled ? null : this.handleUserAnswer.bind(this)}
+        >
           {question && question.answers ? question.answers.map((answer, index) =>
             <RadioButton
               name={index}
@@ -162,7 +165,7 @@ class Question extends Component {
           ) : null}
         </RadioButtonGroup>
         </CardText>
-      </Card>
+      </div>
     )
   }
 
