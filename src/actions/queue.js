@@ -221,7 +221,10 @@ const queryOpenGames = async () => {
 const setupNewGame = async uid => {
   try {
     // push game to firebase
-    const gameRef = await firebaseGames.push({ uid1: uid })
+    const gameRef = await firebaseGames.push({ 
+      uid1: uid,
+      timestamp: Date.now()
+    })
     const gid = await gameRef.key
     // inject questions via api
     await axios.post('https://unc-trivia-app-api.herokuapp.com/games/init-game', {
