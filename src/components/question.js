@@ -138,7 +138,7 @@ class Question extends Component {
           top: '50%', margin: '0', 
           paddingRight: '20%', 
           paddingTop: '3px', 
-          color: '#00bcd4'}}>{index}/5</h1>
+          color: '#00bcd4'}}>{index}/4</h1>
         </CardText>
         <CardText style={{'text-align': 'center', float: 'clear', }}>
           {question && question.question ? he.decode(question.question) : null}
